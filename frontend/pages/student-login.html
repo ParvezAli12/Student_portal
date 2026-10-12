@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login — SSUET Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/student-login.css">
+</head>
+<body>
+
+  <!-- LEFT branding -->
+  <div class="left">
+    <div class="brand">
+      <div class="brand-tag">SSUET · Student Portal</div>
+      <h1>Your Academic Hub</h1>
+      <p>Check your attendance, marks, result card and QR code all in one place.</p>
+    </div>
+    <div class="left-footer">
+      <div class="stats">
+        <div>
+          <span class="stat-val">270</span>
+          <span class="stat-label">Students</span>
+        </div>
+        <div>
+          <span class="stat-val">3</span>
+          <span class="stat-label">Batches</span>
+        </div>
+        <div>
+          <span class="stat-val">15</span>
+          <span class="stat-label">Subjects</span>
+        </div>
+      </div>
+      © 2024 SSUET. All rights reserved.
+    </div>
+  </div>
+
+  <!-- RIGHT form -->
+  <div class="right">
+    <div class="form-box">
+      <div class="form-header">
+        <h2>Student Login</h2>
+        <p>Sign in with your roll number and password</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="rollNumber">Roll Number</label>
+          <input type="text" id="rollNumber" placeholder="e.g. 2023F-BSE-001" autocomplete="username"/>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="password" placeholder="Enter your password"/>
+            <button type="button" class="toggle-pw" id="togglePw">
+              <svg id="eyeIcon" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" id="loginBtn">
+          <div class="spinner" id="spinner"></div>
+          <span id="btnText">Sign In</span>
+        </button>
+      </form>
+
+      <div class="alert error"   id="errorAlert"></div>
+      <div class="alert success" id="successAlert"></div>
+
+      <div class="switch-link">
+        Teacher? <a href="/pages/teacher-login.html">Login here</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:5000/api';
+
+    if (localStorage.getItem('studentToken')) {
+      window.location.href = '/pages/student-dashboard.html';
+    }
+
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const p = document.getElementById('password');
+      p.type = p.type === 'password' ? 'text' : 'password';
+    });
+
+    function showError(msg)   { const e = document.getElementById('errorAlert');   e.textContent = msg; e.style.display = 'block'; document.getElementById('successAlert').style.display = 'none'; }
+    function showSuccess(msg) { const e = document.getElementById('successAlert'); e.textContent = msg; e.style.display = 'block'; document.getElementById('errorAlert').style.display   = 'none'; }
+    function setLoading(on)   { document.getElementById('loginBtn').disabled = on; document.getElementById('spinner').style.display = on ? 'block' : 'none'; document.getElementById('btnText').textContent = on ? 'Signing in…' : 'Sign In'; }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const studentId = document.getElementById('rollNumber').value.trim();
+      const password  = document.getElementById('password').value;
+      if (!studentId || !password) return showError('Please fill in all fields.');
+      setLoading(true);
+      try {
+        const res  = await fetch(`${API}/auth/student/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ studentId, password })
+        });
+        const data = await res.json();
+        if (!res.ok) return showError(data.message || 'Login failed');
+        localStorage.setItem('studentToken', data.token);
+        localStorage.setItem('studentInfo',  JSON.stringify(data.student));
+        showSuccess(`Welcome, ${data.student.name}! Redirecting…`);
+        setTimeout(() => window.location.href = '/pages/student-dashboard.html', 1000);
+      } catch {
+        showError('Cannot connect to server. Is the backend running?');
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marks Entry — SSUET Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/marks-entry.css">
+</head>
+<body>
+
+  <div class="mobile-topbar">
+    <div class="mobile-logo">SSUET <span>Portal</span></div>
+    <button class="hamburger" id="hamburger">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">SSUET Portal</div>
+        <div class="logo-sub">Teacher Panel</div>
+      </div>
+    </div>
+    <div class="teacher-pill">
+      <div class="name" id="teacherName">—</div>
+      <div class="emp"  id="teacherEmp">—</div>
+    </div>
+    <div class="nav-section">Main</div>
+    <a class="nav-item" href="/pages/teacher-dashboard.html">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="/pages/scanner.html">
+      <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+      QR Scanner
+    </a>
+    <div class="nav-section">Manage</div>
+    <a class="nav-item" href="/pages/add-student.html">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Add Student
+    </a>
+    <a class="nav-item" href="/pages/students-list.html">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Students
+    </a>
+    <a class="nav-item active" href="/pages/marks-entry.html">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Marks Entry
+    </a>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Marks Entry</div>
+        <div class="page-sub">Enter and manage student marks per subject</div>
+      </div>
+      <a href="/pages/result-card.html" class="view-btn">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        View Result Cards
+      </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="card filter-card">
+      <div class="filter-row">
+        <div class="filter-group">
+          <label>Subject</label>
+          <select id="subjectSelect">
+            <option value="">— Select Subject —</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Section</label>
+          <select id="sectionSelect" disabled>
+            <option value="">— Select Section —</option>
+          </select>
+        </div>
+        <button class="load-btn" id="loadBtn" disabled>Load Students</button>
+      </div>
+    </div>
+
+    <!-- Marks table -->
+    <div class="card marks-card" id="marksCard" style="display:none">
+      <div class="marks-card-header">
+        <div class="marks-title" id="marksTitle">—</div>
+        <div class="marks-legend">
+          <span>Q1<small>/3</small></span>
+          <span>Q2<small>/3</small></span>
+          <span>Q3<small>/4</small></span>
+          <span>A1<small>/3</small></span>
+          <span>A2<small>/3</small></span>
+          <span>A3<small>/4</small></span>
+          <span>Mid<small>/30</small></span>
+          <span>Final<small>/50</small></span>
+          <span>Total<small>/100</small></span>
+          <span>Grade</span>
+        </div>
+      </div>
+
+      <div class="marks-table-wrap">
+        <table class="marks-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Q1 <span>/3</span></th>
+              <th>Q2 <span>/3</span></th>
+              <th>Q3 <span>/4</span></th>
+              <th>A1 <span>/3</span></th>
+              <th>A2 <span>/3</span></th>
+              <th>A3 <span>/4</span></th>
+              <th>Mid <span>/30</span></th>
+              <th>Final <span>/50</span></th>
+              <th>Total</th>
+              <th>Grade</th>
+              <th>GPA</th>
+              <th>Save</th>
+            </tr>
+          </thead>
+          <tbody id="marksBody"></tbody>
+        </table>
+      </div>
+
+      <div class="marks-footer">
+        <button class="save-all-btn" id="saveAllBtn">
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save All Marks
+        </button>
+        <div class="save-status" id="saveStatus"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .teacher-pill { background: #253656 !important; border: 1px solid #344870 !important; }
+    .teacher-pill .name { color: #FFFFFF !important; font-weight: 600 !important; }
+    .teacher-pill .emp  { color: #A8BACE !important; }
+  </style>
+
+  <script src="../js/marks-entry.js"></script>
+</body>
+</html>

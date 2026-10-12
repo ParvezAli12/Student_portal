@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Print Student ID Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      gap: 2rem;
+      min-height: 100vh;
+    }
+
+    .screen-controls {
+      display: flex; gap: 1rem; align-items: center;
+    }
+
+    .print-btn-screen {
+      background: #1B2A4A; color: white;
+      border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+    }
+    .print-btn-screen:hover { background: #111D33; }
+
+    .back-link {
+      font-size: 13px; color: #6B7280;
+      text-decoration: none;
+    }
+    .back-link:hover { color: #1B2A4A; }
+
+    .cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── FRONT OF CARD ── */
+    .card-front {
+      width: 85.6mm;
+      height: 54mm;
+      background: white;
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .card-front .top-bar {
+      background: #1B2A4A;
+      padding: 6px 10px 5px;
+      text-align: center;
+      position: relative;
+    }
+    .card-front .top-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -12px; left: 0; right: 0;
+      height: 24px;
+      background: #1B2A4A;
+      clip-path: ellipse(60% 100% at 50% 0%);
+    }
+
+    .card-front .uni-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 8px; font-weight: 700;
+      color: white; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .card-front .card-label {
+      font-size: 6px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .card-front .card-body {
+      padding: 14px 10px 8px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 4px;
+    }
+
+    .card-front .photo-box {
+      width: 28mm; height: 30mm;
+      background: #F5F4F0;
+      border: 1.5px solid #E2E0DC;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .card-front .photo-box .initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: #1B2A4A;
+    }
+
+    .card-front .info { flex: 1; }
+    .card-front .info-row {
+      display: flex; align-items: baseline;
+      margin-bottom: 4px;
+      gap: 4px;
+    }
+    .card-front .info-label {
+      font-size: 5.5px;
+      font-weight: 600;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      min-width: 28px;
+      flex-shrink: 0;
+    }
+    .card-front .info-value {
+      font-size: 7px;
+      font-weight: 600;
+      color: #1B2A4A;
+      line-height: 1.3;
+    }
+    .card-front .info-value.name {
+      font-family: 'Playfair Display', serif;
+      font-size: 9px;
+    }
+    .card-front .info-value.roll {
+      color: #C0472F;
+      font-size: 7.5px;
+      letter-spacing: 0.04em;
+    }
+
+    .card-front .bottom-strip {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #C0472F;
+      padding: 3px 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-front .bottom-strip span {
+      font-size: 5px;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* fold line */
+    .fold-line {
+      width: 85.6mm;
+      border-top: 1.5px dashed #aaa;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .fold-label {
+      background: #e8e8e8;
+      font-size: 10px; color: #aaa;
+      padding: 0 8px;
+      position: absolute;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── BACK OF CARD (QR side) ── */
+    .card-back {
+      width: 85.6mm;
+      height: 54mm;
+      background: white;
+      border-radius: 0 0 6px 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .card-back .back-header {
+      font-size: 6px;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .card-back img {
+      width: 30mm; height: 30mm;
+    }
+
+    .card-back .qr-roll {
+      font-size: 7px;
+      font-weight: 700;
+      color: #C0472F;
+      letter-spacing: 0.06em;
+      font-family: 'Inter', monospace;
+    }
+
+    .card-back .qr-note {
+      font-size: 5.5px;
+      color: #9CA3AF;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .card-back .back-footer {
+      position: absolute;
+      bottom: 6px;
+      font-size: 5px;
+      color: #D1D5DB;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── PRINT STYLES ── */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    
+  }
+  body {
+    background: white;
+    padding: 0;
+    gap: 0;
+  }
+  .screen-controls { display: none !important; }
+  .cards-wrapper {
+    margin: 10mm auto;
+  }
+  .card-front, .card-back {
+    box-shadow: none;
+    border: 0.5px solid #ccc;
+  }
+  .fold-line { border-color: #ccc; }
+  .fold-label { background: white; }
+}
+  </style>
+</head>
+<body>
+
+  <div class="screen-controls">
+    <a class="back-link" id="backLink" href="/pages/add-student.html">← Back</a>
+    <button class="print-btn-screen" onclick="window.print()">🖨 Print ID Card</button>
+  </div>
+
+  <div class="cards-wrapper">
+
+    <!-- FRONT -->
+    <div class="card-front">
+      <div class="top-bar">
+        <div class="uni-name">Sir Syed University of<br>Engineering & Technology</div>
+        <div class="card-label">Student Identity Card</div>
+      </div>
+      <div class="card-body">
+        <div class="photo-box">
+          <div class="initials" id="photoInitials">AB</div>
+        </div>
+        <div class="info">
+          <div class="info-row">
+            <span class="info-label">Name</span>
+            <span class="info-value name" id="infoName">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Roll No</span>
+            <span class="info-value roll" id="infoRoll">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Batch</span>
+            <span class="info-value" id="infoBatch">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Section</span>
+            <span class="info-value" id="infoSection">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Program</span>
+            <span class="info-value">BS Software Engineering</span>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-strip">
+        <span>Authorized Signature</span>
+        <span>SSUET · Karachi</span>
+        <span>Holder's Signature</span>
+      </div>
+    </div>
+
+    <!-- FOLD LINE -->
+    <div class="fold-line">
+      <span class="fold-label">— fold here —</span>
+    </div>
+
+    <!-- BACK -->
+    <div class="card-back">
+      <div class="back-header">Scan for Attendance</div>
+      <img id="qrCodeImg" src="" alt="QR Code"/>
+      <div class="qr-roll" id="qrRollBack">—</div>
+      <div class="qr-note">
+        Present this card to the teacher's scanner<br>
+        to mark your attendance
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Read student data passed via localStorage
+    const data = JSON.parse(localStorage.getItem('printStudent') || '{}');
+
+    if (!data.name) {
+      document.body.innerHTML = '<p style="padding:2rem;color:red">No student data found. Go back and register a student first.</p>';
+    } else {
+      const initials = data.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+      document.getElementById('photoInitials').textContent = initials;
+      document.getElementById('infoName').textContent      = data.name;
+      document.getElementById('infoRoll').textContent      = data.rollNumber;
+      document.getElementById('infoBatch').textContent     = data.batch;
+      document.getElementById('infoSection').textContent   = data.section;
+      document.getElementById('qrCodeImg').src             = data.qrImage;
+      document.getElementById('qrRollBack').textContent    = data.rollNumber;
+    }
+  </script>
+</body>
+</html>

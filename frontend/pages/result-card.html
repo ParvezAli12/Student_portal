@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Result Card — SSUET Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/result-card.css">
+</head>
+<body>
+
+  <div class="mobile-topbar">
+    <div class="mobile-logo">SSUET <span>Portal</span></div>
+    <button class="hamburger" id="hamburger">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">SSUET Portal</div>
+        <div class="logo-sub">Teacher Panel</div>
+      </div>
+    </div>
+    <div class="teacher-pill">
+      <div class="name" id="teacherName">—</div>
+      <div class="emp"  id="teacherEmp">—</div>
+    </div>
+    <div class="nav-section">Main</div>
+    <a class="nav-item" href="/pages/teacher-dashboard.html">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="/pages/scanner.html">
+      <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+      QR Scanner
+    </a>
+    <div class="nav-section">Manage</div>
+    <a class="nav-item" href="/pages/add-student.html">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Add Student
+    </a>
+    <a class="nav-item" href="/pages/students-list.html">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Students
+    </a>
+    <a class="nav-item active" href="/pages/result-card.html">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Result Cards
+    </a>
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Result Cards</div>
+        <div class="page-sub">Search a student to view and print their result card</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="card search-card">
+      <div class="search-row">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name or roll number…"/>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+
+    <!-- Result card display -->
+    <div id="resultSection" style="display:none">
+
+      <!-- Print controls (hidden when printing) -->
+      <div class="print-controls no-print">
+        <button class="print-btn-screen" onclick="window.print()">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Result Card
+        </button>
+        <button class="clear-btn-screen" onclick="clearResult()">Clear</button>
+      </div>
+
+      <!-- The actual printable result card -->
+      <div class="result-card" id="resultCard">
+
+        <!-- Header -->
+        <div class="rc-header">
+          <div class="rc-logo">
+            <div class="rc-logo-box">SE</div>
+            <div>
+              <div class="rc-uni">Sir Syed University of Engineering & Technology</div>
+              <div class="rc-dept">Department of Software Engineering · Karachi</div>
+            </div>
+          </div>
+          <div class="rc-title-block">
+            <div class="rc-title">SEMESTER RESULT CARD</div>
+            <div class="rc-semester">Academic Year 2025-2026</div>
+          </div>
+        </div>
+
+        <!-- Student info -->
+        <div class="rc-info-grid">
+          <div class="rc-info-item">
+            <div class="rc-info-label">Student Name</div>
+            <div class="rc-info-value" id="rcName">—</div>
+          </div>
+          <div class="rc-info-item">
+            <div class="rc-info-label">Roll Number</div>
+            <div class="rc-info-value" id="rcRoll">—</div>
+          </div>
+          <div class="rc-info-item">
+            <div class="rc-info-label">Batch</div>
+            <div class="rc-info-value" id="rcBatch">—</div>
+          </div>
+          <div class="rc-info-item">
+            <div class="rc-info-label">Section</div>
+            <div class="rc-info-value" id="rcSection">—</div>
+          </div>
+          <div class="rc-info-item">
+            <div class="rc-info-label">Program</div>
+            <div class="rc-info-value">BS Software Engineering</div>
+          </div>
+          <div class="rc-info-item">
+            <div class="rc-info-label">Date Issued</div>
+            <div class="rc-info-value" id="rcDate">—</div>
+          </div>
+        </div>
+
+        <!-- Marks table -->
+        <table class="rc-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Code</th>
+              <th>Cr.Hrs</th>
+              <th>Q1<br><small>/3</small></th>
+              <th>Q2<br><small>/3</small></th>
+              <th>Q3<br><small>/4</small></th>
+              <th>A1<br><small>/3</small></th>
+              <th>A2<br><small>/3</small></th>
+              <th>A3<br><small>/4</small></th>
+              <th>Mid<br><small>/30</small></th>
+              <th>Final<br><small>/50</small></th>
+              <th>Total<br><small>/100</small></th>
+              <th>Grade</th>
+              <th>GPA</th>
+            </tr>
+          </thead>
+          <tbody id="rcTableBody"></tbody>
+          <tfoot id="rcTableFoot"></tfoot>
+        </table>
+
+        <!-- CGPA + result -->
+        <div class="rc-bottom">
+          <div class="rc-cgpa-block">
+            <div class="rc-cgpa-label">CGPA</div>
+            <div class="rc-cgpa-val" id="rcCGPA">—</div>
+          </div>
+          <div class="rc-result-block" id="rcResultBlock">
+            <div class="rc-result-label">Result</div>
+            <div class="rc-result-val" id="rcResult">—</div>
+          </div>
+          <div class="rc-grade-block">
+            <div class="rc-grade-label">Overall Grade</div>
+            <div class="rc-grade-val" id="rcOverallGrade">—</div>
+          </div>
+        </div>
+
+        <!-- Signatures -->
+        <div class="rc-signatures">
+          <div class="rc-sig">
+            <div class="rc-sig-line"></div>
+            <div class="rc-sig-label">Class Advisor</div>
+          </div>
+          <div class="rc-sig">
+            <div class="rc-sig-line"></div>
+            <div class="rc-sig-label">Controller of Examinations</div>
+          </div>
+          <div class="rc-sig">
+            <div class="rc-sig-line"></div>
+            <div class="rc-sig-label">Dean / HOD</div>
+          </div>
+        </div>
+
+        <div class="rc-footer">
+          This is a computer-generated result card. · SSUET · Karachi · www.ssuet.edu.pk
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .teacher-pill { background: #253656 !important; border: 1px solid #344870 !important; }
+    .teacher-pill .name { color: #FFFFFF !important; font-weight: 600 !important; }
+    .teacher-pill .emp  { color: #A8BACE !important; }
+  </style>
+
+  <script src="../js/result-card.js"></script>
+</body>
+</html>

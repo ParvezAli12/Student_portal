@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Login — SSUET Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">  <link rel="stylesheet" href="../css/teacher-login.css">
+</head>
+<body>
+
+  <!-- Mobile topbar -->
+<div class="mobile-topbar">
+  <div class="mobile-logo">SSUET <span>Portal</span></div>
+  <button class="hamburger" id="hamburger">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- LEFT BRANDING -->
+  <div class="left">
+    <div class="brand">
+      <div class="brand-tag">SSUET · Student Portal</div>
+      <h1>Smart Attendance System</h1>
+      <p>Scan student ID cards instantly with your camera. Mark attendance in seconds, not minutes.</p>
+    </div>
+    <div class="left-footer">
+      <div class="stats">
+        <div>
+          <span class="stat-val">6</span>
+          <span class="stat-label">Teachers</span>
+        </div>
+        <div>
+          <span class="stat-val">3</span>
+          <span class="stat-label">Sections</span>
+        </div>
+        <div>
+          <span class="stat-val">QR</span>
+          <span class="stat-label">Powered</span>
+        </div>
+      </div>
+      © 2024 SSUET. All rights reserved.
+    </div>
+  </div>
+
+  <!-- RIGHT FORM -->
+  <div class="right">
+    <div class="form-box">
+      <div class="form-header">
+        <h2>Teacher Login</h2>
+        <p>Sign in to start marking attendance</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@ssuet.edu.pk" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="password" placeholder="Enter your password"/>
+            <button type="button" class="toggle-pw" id="togglePw">
+              <svg id="eyeIcon" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="btn" id="loginBtn">
+          <div class="spinner" id="spinner"></div>
+          <span id="btnText">Sign In</span>
+        </button>
+      </form>
+
+      <div class="alert error"   id="errorAlert"></div>
+      <div class="alert success" id="successAlert"></div>
+
+      <div class="switch-link">
+        Student? <a href="student-login.html">Login here</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/teacher-login.js"></script>
+</body>
+</html>

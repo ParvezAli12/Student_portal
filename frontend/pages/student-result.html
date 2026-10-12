@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Result Card — SSUET Student Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/student-portal.css">
+  <link rel="stylesheet" href="../css/result-card.css">
+</head>
+<body>
+  <div class="mobile-topbar"><div class="mobile-logo">SSUET <span>Portal</span></div><button class="hamburger" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar student-sidebar">
+    <div class="logo"><div class="logo-box" style="background:#2D6A4F"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="logo-name">SSUET Portal</div><div class="logo-sub">Student Panel</div></div></div>
+    <div class="student-pill"><div class="s-avatar" id="sAvatar">—</div><div><div class="s-name" id="sName">—</div><div class="s-roll" id="sRoll">—</div></div></div>
+    <div class="nav-section">Menu</div>
+    <a class="nav-item" href="/pages/student-dashboard.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <a class="nav-item" href="/pages/student-attendance.html"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Attendance</a>
+    <a class="nav-item" href="/pages/student-marks.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>Marks</a>
+    <a class="nav-item active" href="/pages/student-result.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Result Card</a>
+    <a class="nav-item" href="/pages/student-qr.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><path d="M21 16h-3v3M21 21h-3M16 16h.01"/></svg>My QR Code</a>
+    <a class="nav-item" href="/pages/student-profile.html"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile & Password</a>
+    <div class="sidebar-footer"><button class="logout-btn" id="logoutBtn"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Logout</button></div>
+  </div>
+
+  <div class="main">
+    <div class="s-topbar no-print">
+      <div>
+        <div class="page-title">My Result Card</div>
+        <div class="page-sub">Your semester result — printable</div>
+      </div>
+      <button class="qr-shortcut" onclick="window.print()">
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+    </div>
+
+    <div id="resultContent"><div class="empty-state">Loading result…</div></div>
+  </div>
+
+  <script src="../js/student-result.js"></script>
+</body>
+</html>
